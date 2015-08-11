@@ -68,7 +68,7 @@ if __name__ == '__main__':
 	y empezar a ejecutarlas mañana.
 	
 	-pero hay que tener algo para diferencias las tareas normales y las réplicas
-	de una manera molona en las gráficas
+	de una manera molona en las graficas
 	
 	-creation date ahora cuenta a partir del momento en que empieza a ejecutarse
 	 la primera tarea. Si se ha creado antes es cero, y si no pues lo que indiques

@@ -21,3 +21,6 @@ Created on Aug 31, 2012
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
+
+dbUser='root'
+dbPassword='password'

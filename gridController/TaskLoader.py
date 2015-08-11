@@ -24,40 +24,47 @@ import sys
 
 from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-                        
+import base
+
 if __name__ == '__main__':
-    
+
     if len(sys.argv) != 2:
         print("que puta mierda es esta")
-    
-    
-    engine = create_engine('mysql://root:monteraPass2013@localhost/DistributedController', echo=False)
+
+
+    #connect to DB and create it if it does not exist
+
+    engine = create_engine('mysql://'+base.dbUser+':'+base.dbPassword+'@localhost', echo=False)
+
+    engine.execute("CREATE DATABASE DistributedController") #create db
+    engine.execute("USE DistributedController") # select new db
+
     mySessionClass = sessionmaker(bind=engine)
     mySession = mySessionClass()
-    
+
+
     metadata = MetaData()
 
     taskInfos = TaskInfo.dbDesign(metadata)
-    
+
     inputFiles = InputFile.dbDesign(metadata)
-    
+
     outputFiles = OutputFile.dbDesign(metadata)
-     
+
     arguments = Argument.dbDesign(metadata)
-    
+
     gridTasks = GridTask.dbDesign(metadata)
-    
-    taskGroups = TaskGroup.dbDesign(metadata) 
-        
+
+    taskGroups = TaskGroup.dbDesign(metadata)
+
     metadata.create_all(engine)
-    
-    
+
+
     #create task group
     taskGroup = TaskGroup.TaskGroup(sys.argv[1])
     mySession.add(taskGroup)
     mySession.commit()
-    
+
     print("LOADING TASK GROUP: " + sys.argv[1])
     for xmlFile in open(sys.argv[1], 'r'):
         xmlFile = xmlFile.strip()
@@ -65,9 +72,9 @@ if __name__ == '__main__':
         auxTask.fromXML(taskGroup.id,xmlFile)
         mySession.add(auxTask)
         print("    Loading task: " + xmlFile)
-    
+
     print ("    updating DB")
     mySession.commit()
-    
+
 
     print("TASKS LOADED")

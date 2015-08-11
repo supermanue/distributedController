@@ -14,16 +14,34 @@ It is created for personal use and does not intend to serve for anything serios 
 I will update this documentation at some moment, but not now
 
 
-#Installation#
+#Installation
 
-Decir que se necesita python version noseque, drmaa, gridway, sqlalchemy y MySQL
+This program requires python 2.7, SQLAlchemy, MySQL, DRMAA and GridWay (just for the Grid)
 
-El sqlalchemy esta configurado para mysql. si se utiliza otro, cambiarlo en las fuentes
-(poner la linea y un enlace al tutorial de sqlalchemy)
 
 poner donde se mete la clave y todo eso para la bbdd
 
-#Usage#
+
+###SQLAlchemy
+
+Download latest code from https://pypi.python.org/pypi/SQLAlchemy
+
+Install. If a local install (ie not root permissions is desired),
+
+```
+mkdir $HOME/libs
+cd (SQLAlchemy dir)
+python setup.py install --root $HOME/libs
+
+export PYTHONPATH=$PYTHONPATH:$HOME/libs/:
+#to set it forever on login, add this same to .bashrc
+```
+
+SQLAlchemy is hard-coded configured to employ MySQL. If a diferent one is desired, change it on the source code.
+#TODO (poner la linea y un enlace al tutorial de sqlalchemy)
+
+
+#Usage
 
 el loader pa cargar los templates
 el controller pa ejecutarlos
@@ -35,20 +53,24 @@ Templates are XML files with a given format.
 
 you can create them by hand or employ an (included) excutable to create them automatically.
 
-### Template format ###
+### Template format
 
-#### Index ####
+#### Index
 
 The index is a text file containing one line for each template to execute. The idea is that an index contains information about all tasks composing a job.
 
-index.txt
-/sñjddjhljhldj
-/ñkdjf ñkjf
-/ñdkj dlkjd
+```
+/home/u5682/templates/test1/corsika_1
+/home/u5682/templates/test1/corsika_2
+/home/u5682/templates/test1/corsika_3
+/home/u5682/templates/test1/corsika_4
+/home/u5682/templates/test1/corsika_5
+```
 
-#### Templates ####
+#### Templates
 A template contains all the information related to a task.
 
+```
 <gridTask>
 	<jobName>desired job name, as will appar on GridWay</jobName>
 	<executable>/bin/sh</executable>
@@ -66,15 +88,20 @@ A template contains all the information related to a task.
     (as many as desired)
 	</outputFiles>
 </gridTask>
+```
 
-
-###Template creation###
+###Template creation
 
 There are some files (dirty hacks in fact) that create templates for different experiments. They are useful because can be adapted to new codes, speeding the template creation.
 
 
-##loading templates##
+##loading templates
 
+There is an script for this.
+
+```
+python TaskLoader.py <indexFile>
+```
 
 ##executing templates on the grid##
 
@@ -92,10 +119,12 @@ There are some files (dirty hacks in fact) that create templates for different e
 
 
 
+#OLD
+
 
 definir el formato de los templates: directorio, indice y templates
 decir que no utiliza los templates de gridway porque estos se pueden usar en otros sitios
-(SAGA, drmaa en cluster o lo que sea) haciendo que las aplicaciones sean más portables
+(SAGA, drmaa en cluster o lo que sea) haciendo que las aplicaciones sean mas portables
 
 
 subir la libreria java que crea los templates, ver de que manera
@@ -105,7 +134,7 @@ subir la libreria java que crea los templates, ver de que manera
 License
 -------
 
-este software está liberado bajo licencia GPL, bla bla bla
+este software esta liberado bajo licencia GPL, bla bla bla
 
 Citations
 ------

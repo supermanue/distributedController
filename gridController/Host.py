@@ -37,16 +37,16 @@ class Host(Base):
 	problematicTasks = Column(Integer)
 	problematicTasksInARow = Column(Integer)
 	lastProblematicTask = Column(DateTime)
-	
+
 	bannedTime = 7200
-	
+
 	def __init__(self, hostname):
 		self.hostname = hostname
 		self.successfulTasks = 0
 		self.failedTasks = 0
 		self.problematicTasks = 0
 		self.problematicTasksInARow = 0
-		
+
 	def __repr__(self):
 		return "<Host('%i', '%s', '%i', '%i', '%i')>" % (self.id, self.hostname, self.successfulTasks, self.failedTasks, self.problematicTasks)
 
@@ -55,16 +55,16 @@ class Host(Base):
 	def registerSuccesfulExecution(self):
 		self.successfulTasks +=1
 		self.problematicTasksInARow = 0
-		
+
 	def registerFailedExecution(self, date):
 		self.failedTasks += 1
-		
+
 	def registerProblematicExecution(self,date):
 		self.problematicTasksInARow +=1
 		self.lastProblematicTask = date
 
 
-#------------------------------------------------------------------------------ 
+#------------------------------------------------------------------------------
 	#------------------------------------------------------- def isBanned(self):
 		#--------------------------------------- if self.problematicTasks < 100:
 			#------------------------------------------------------ return False
@@ -76,35 +76,35 @@ class Host(Base):
 		#------------------------------ if self.lastProblematicTask > timeLimit:
 			#------------------------------------------------------- return True
 		#---------------------------------------------------------- return False
- 
+
 
 
 #baneo: incremental, 10 minutos por cada tarea fallida
-#con un máximo de un dia
+#con un maximo de un dia
 	def isBanned(self):
-		
+
 		if len(self.hostname.strip())< 2:
 			return False
-		
+
 		if self.problematicTasksInARow < 10:
 			return False
-		
+
 		banTime = 10 * 60 * (self.problematicTasksInARow - 10)
 		maxBanTime = 24 * 60 * 60
 		banTime = min (banTime, maxBanTime)
-		
+
 		timeSinceLastFail = datetime.now() - self.lastProblematicTask
-		
+
 		if timeSinceLastFail < timedelta(banTime):
 			return True
-		
-		return False
-			
 
-	
+		return False
+
+
+
 
 def dbDesign(metadata):
-	return Table('hosts', metadata, 
+	return Table('hosts', metadata,
 		Column('id', Integer, primary_key=True),
 		Column('hostname', String(256)),
 		Column('successfulTasks', Integer),
@@ -113,13 +113,13 @@ def dbDesign(metadata):
    		Column('problematicTasksInARow', Integer),
 		Column('lastProblematicTask', DateTime)
 )
-	
+
 
 
 
 def readHost(gwpsFile, gwID):
 
-	result = "" 
+	result = ""
 
 	foundTask = False
 	fileToRead = open(gwpsFile, 'r')
@@ -131,7 +131,7 @@ def readHost(gwpsFile, gwID):
 			resultWithQueue = line.split("=")[1].strip()
 			result = resultWithQueue.split("/")[0]
 			resultHost=result.split(".")[0]
-			
+
 			result = result[(len(resultHost)+1):]
 			break
 	return result
