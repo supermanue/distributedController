@@ -1,7 +1,7 @@
 '''
 Created on Aug 22, 2012
 
-@author: Manuel Rodríguez Pascual, <manuel.rodriguez.pascual@gmail.com>
+@author: Manuel Rodriguez Pascual, <manuel.rodriguez.pascual@gmail.com>
 
 	This file is part of gridwayController.
 

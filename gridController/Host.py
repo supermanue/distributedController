@@ -1,7 +1,7 @@
 '''
 Created on Aug 22, 2012
 
-@author: Manuel Rodríguez Pascual, <manuel.rodriguez.pascual@gmail.com>
+@author: Manuel Rodriguez Pascual, <manuel.rodriguez.pascual@gmail.com>
 
 	This file is part of gridwayController.
 
@@ -80,7 +80,7 @@ class Host(Base):
 
 
 #baneo: incremental, 10 minutos por cada tarea fallida
-#con un máximo de un día
+#con un máximo de un dia
 	def isBanned(self):
 		
 		if len(self.hostname.strip())< 2:
