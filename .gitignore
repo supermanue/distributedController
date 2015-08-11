@@ -1,3 +1,9 @@
+#project stuff
+
+gridController/nohup.out
+gridController/prepare*
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,51 @@
+gridwayController
+-----------------
+
+Author: Manuel Rodríguez-Pascual <manuel.rodriguez.pascual@gmail.com>
+Insititution: CIEMAT, Madrid, SPAIN
+
+
+This is the documentation for gridwayController application.
+
+It consists on a series of scripts and wrappers for a fast, robust and portable execution of tasks.
+
+It is created for personal use and does not intend to serve for anything serios to anybody else.
+
+I will update this documentation at some moment, but not now
+
+Installation
+------------
+Decir que se necesita python version noseque, drmaa, gridway, sqlalchemy y MySQL
+
+El sqlalchemy esta configurado para mysql. si se utiliza otro, cambiarlo en las fuentes
+(poner la linea y un enlace al tutorial de sqlalchemy)
+
+poner donde se mete la clave y todo eso para la bbdd
+
+Usage
+-----
+el loader pa cargar los templates
+el controller pa ejecutarlos
+
+
+definir el formato de los templates: directorio, indice y templates
+decir que no utiliza los templates de gridway porque estos se pueden usar en otros sitios
+(SAGA, drmaa en cluster o lo que sea) haciendo que las aplicaciones sean más portables
+
+
+subir la libreria java que crea los templates, ver de que manera
+
+
+
+License
+-------
+
+este software está liberado bajo licencia GPL, bla bla bla
+
+Citations
+------
+Users employing this software for scientific articles are encouraged to reference it.
+
+The article that should be cited is:
+
+Manuel Rodríguez Pascual, Antonio Juan Rubio-Montero, Rafael Mayo García, "my article", not published yet
