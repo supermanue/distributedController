@@ -9,7 +9,7 @@ This is the documentation for gridwayController application.
 
 It consists on a series of scripts and wrappers for a fast, robust and portable execution of tasks.
 
-It is created for personal use and does not intend to serve for anything serios to anybody else.
+It is created for personal use and does not intend to serve for anything serious to anybody else. Same applies to this README.
 
 I will update this documentation at some moment, but not now
 
@@ -19,8 +19,20 @@ I will update this documentation at some moment, but not now
 This program requires python 2.7, SQLAlchemy, MySQL, DRMAA and GridWay (just for the Grid)
 
 
-poner donde se mete la clave y todo eso para la bbdd
+### Parameters
 
+File GridController.py has some hardcoded parameters. They are all in the __init__ method. 
+
+###MySQL
+It has to be installed
+
+user/password is hardcoded in base.py . Password cannot be empty.
+
+If mysql is passwordless, you have to set one. It is done with
+
+```
+set password = password ('desired password')
+```
 
 ###SQLAlchemy
 
@@ -38,7 +50,8 @@ export PYTHONPATH=$PYTHONPATH:$HOME/libs/:
 ```
 
 SQLAlchemy is hard-coded configured to employ MySQL. If a diferent one is desired, change it on the source code.
-#TODO (poner la linea y un enlace al tutorial de sqlalchemy)
+
+TODO (poner la linea y un enlace al tutorial de sqlalchemy)
 
 
 #Usage
@@ -105,11 +118,8 @@ python TaskLoader.py <indexFile>
 
 ##executing templates on the grid##
 
-1.- Create templates
 
-2.- Load template
 
-3.- Execute template.
 
 
 

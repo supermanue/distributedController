@@ -373,19 +373,19 @@ class GridWayController(object):
 	#this method checks whether it is neccesary to replicate a task.
 	#if true, it creates the replica.
 
-	 #esto sirve para evitar que en algún host problematico haya tareas que figuren como ejecutandose pero sea un error.
-	#esto pasa en un numero pequeño de casos pero difuclta enormemente el trabajo. La solución es replicar la tarea
+	 #esto sirve para evitar que en algun host problematico haya tareas que figuren como ejecutandose pero sea un error.
+	#esto pasa en un numero pequeno de casos pero difuclta enormemente el trabajo. La solucion es replicar la tarea
 	#y que se ejecute en otro sieito
-	#también sirve por si alguna tarea ha caido en un host muy lento y esta haciendo de cuello de botella
+	#tambien sirve por si alguna tarea ha caido en un host muy lento y esta haciendo de cuello de botella
 
-	#la solución es replicar el 10% de las tarea de cada grupo que mas estan tardando en acabar
+	#la solucion es replicar el 10% de las tarea de cada grupo que mas estan tardando en acabar
 
 	#como mandar una duplicada:
 	#para hacer eso basta con ponerlas como WAITING. Esto hace que le den un nuevo ID, se envie y tal.
-	#como la otra sigue dentro de gridway, si acaba su ejecución correctamente tendremos los archivos de salida deseados,
+	#como la otra sigue dentro de gridway, si acaba su ejecucion correctamente tendremos los archivos de salida deseados,
 	#con lo que en el paso anterior (punto 1) se detectara y marcara como acabada.
 
-	#PROBLEMA: esto deja una de las dos tareas por el grid sin cancela, creando un pequeño overhead. Es un problema pero es la solución facil hehehe
+	#PROBLEMA: esto deja una de las dos tareas por el grid sin cancela, creando un pequeno overhead. Es un problema pero es la solucion facil hehehe
 	def replicaControl(self, dbSession):
 
 		#get all task groups in execution
@@ -437,7 +437,7 @@ class GridWayController(object):
 				continue
 			groupSize = dbSession.query(func.count(GridTask.GridTask)).filter(GridTask.GridTask.taskGroupID ==group.id).scalar()
 
-			#TODO: esto es una chapuza. Esta situación no se tendri que dar nunca, es un parche por si se inicializó mal la db o algo
+			#TODO: esto es una chapuza. Esta situacion no se tendri que dar nunca, es un parche por si se inicializo mal la db o algo
 			if groupSize ==0:
 				continue
 			#===================================================================
@@ -796,8 +796,8 @@ class GridWayController(object):
 	#aqui consideramos finished cualquier tarea que  tiene sus archivos de salida
 	#esto tiene una utilidad doble: por un lado controla las rtareas replicadas, y por otro
 	#aquellas en las que ha habido error y no se han actualizado a pesar de haber acabado (culpa de GW)
-	#lo de waiting no se si es un freno o es bueno, hay que pensarlo. por un lado evita algun pequeño problema pero por otro
-	#añade un overhead enorme
+	#lo de waiting no se si es un freno o es bueno, hay que pensarlo. por un lado evita algun pequeno problema pero por otro
+	#anade un overhead enorme
 
 		print("")
 		print("CONTROL OF OLD, FINISHED AND LOST TASKS")

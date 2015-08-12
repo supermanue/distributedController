@@ -63,11 +63,11 @@ if __name__ == '__main__':
 
 	'''
 	Creation date:
-	-originalmente representaba la fecha de creación de la tarea.
+	-originalmente representaba la fecha de creacion de la tarea.
 	Esto no tiene mucho sentido, porque las puedes haber creado el mes pasado
-	y empezar a ejecutarlas mañana.
+	y empezar a ejecutarlas manana.
 	
-	-pero hay que tener algo para diferencias las tareas normales y las réplicas
+	-pero hay que tener algo para diferencias las tareas normales y las replicas
 	de una manera molona en las graficas
 	
 	-creation date ahora cuenta a partir del momento en que empieza a ejecutarse

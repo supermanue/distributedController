@@ -36,7 +36,11 @@ if __name__ == '__main__':
 
     engine = create_engine('mysql://'+base.dbUser+':'+base.dbPassword+'@localhost', echo=False)
 
+try:
     engine.execute("CREATE DATABASE DistributedController") #create db
+except: 
+    print ("database already exists")
+
     engine.execute("USE DistributedController") # select new db
 
     mySessionClass = sessionmaker(bind=engine)

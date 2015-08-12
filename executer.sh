@@ -7,7 +7,7 @@ ls
 echo "cambio los permisos del ejecutable"
 chmod +x $1
 
-echo "ejecuto la aplicación"
+echo "ejecuto la aplicacion"
 
 ./$@
 

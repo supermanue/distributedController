@@ -113,10 +113,10 @@ if __name__ == '__main__':
 		try:
 			result = runProcess(command)
 			print (result)
-			print ("	parece que ruló")
+			print ("	parece que rulo")
 			hostList.append(gwHost)
 		except:
-			print ("parece que falló")
+			print ("parece que fallo")
 
 	print ("")
 	print("RENEWED CERTIFICATES")
