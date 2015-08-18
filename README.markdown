@@ -1,29 +1,23 @@
 gridwayController
 -----------------
-
-Author: Manuel Rodriguez-Pascual <manuel.rodriguez.pascual@gmail.com>
-Insititution: CIEMAT, Madrid, SPAIN
-
-
 This is the documentation for gridwayController application.
 
 It consists on a series of scripts and wrappers for a fast, robust and portable execution of tasks.
 
 It is created for personal use and does not intend to serve for anything serious to anybody else. Same applies to this README.
 
-I will update this documentation at some moment, but not now
-
+The basic idea is that you can create a template describing your job to be executed on a remote system, and then employ some of the existing scripts to execute it on a given infrastructure. Currently it supports Grid and Cluster.
 
 #Installation
 
 This program requires python 2.7, SQLAlchemy, MySQL, DRMAA and GridWay (just for the Grid)
 
 
-### Parameters
+## Configuration
 
-File GridController.py has some hardcoded parameters. They are all in the __init__ method. 
+GridController has some hardcoded parameters. They are all in the __init__ method. The execption is database user and password, which is on base.py
 
-###MySQL
+##MySQL
 It has to be installed
 
 user/password is hardcoded in base.py . Password cannot be empty.
@@ -34,7 +28,7 @@ If mysql is passwordless, you have to set one. It is done with
 set password = password ('desired password')
 ```
 
-###SQLAlchemy
+##SQLAlchemy
 
 Download latest code from https://pypi.python.org/pypi/SQLAlchemy
 
@@ -49,18 +43,12 @@ export PYTHONPATH=$PYTHONPATH:$HOME/libs/:
 #to set it forever on login, add this same to .bashrc
 ```
 
-SQLAlchemy is hard-coded configured to employ MySQL. If a diferent one is desired, change it on the source code.
-
-TODO (poner la linea y un enlace al tutorial de sqlalchemy)
+SQLAlchemy is hard-coded configured to employ MySQL. If a diferent one is desired, change it on the source code. of GridController, TaskLoader and ExecutionAnalyer. (I know, it should be simpler...)
 
 
 #Usage
 
-el loader pa cargar los templates
-el controller pa ejecutarlos
-
-
-##Template format & creation##
+##Templates
 
 Templates are XML files with a given format.
 
@@ -105,10 +93,20 @@ A template contains all the information related to a task.
 
 ###Template creation
 
+
+####Manual creation
 There are some files (dirty hacks in fact) that create templates for different experiments. They are useful because can be adapted to new codes, speeding the template creation.
 
+These files are located in /templateCreation
 
-##loading templates
+
+####App integration
+File gridController/GridTask.py can be employed to manage templates in python. It is quite self-explanatory.
+
+Java intrface and code is stored in javaTemplateManager
+
+
+##loading templates in a database
 
 There is an script for this.
 
@@ -116,11 +114,57 @@ There is an script for this.
 python TaskLoader.py <indexFile>
 ```
 
-##executing templates on the grid##
+##Executing a code on the grid
+- Load templates on the database
+- Refresh grid certificates in the remote sites (this should not be necessary) with
+```
+python RefreshCertificates.py
+```
+
+- Execute on the Grid with
+```
+python  GridController.py
+```
+- When finished, results will be automatically analyzed with ExecutionAnaLyzer.py and displayed on the screen.
+
+
+##Executing a code in a cluster
+
+As clusters are supposed to be robust, no databases are employed. Templates are just read from an index file and executed.
+For PBS, you have to use
+
+```
+python pbsMultipleTasks.py <fileWithTaskGroups>
+```
+Here there is some control not to break the system if too many tasks are submitted at the same time.
+
+
+If system supports DRMAA, then the script is
+
+```
+python MultipleDRAAJobSubmission.py <fileWithTaskGroups>
+
+```
+this one has no control of any kind, just submits everything.
+
+Anyway the files in /clusterController are quite experimental, probably don't work, and should be cleaned at some point.
 
 
 
+#Authoring & License
 
+Code is distributed with a  GNU GENERAL PUBLIC LICENSE Version 2.
+
+You should have received a copy of the GNU General Public License
+along with gridwayController.  If not, see <http://www.gnu.org/licenses/>.
+
+
+Author: Manuel Rodriguez-Pascual <manuel.rodriguez.pascual@gmail.com>
+
+Insititution: CIEMAT, Madrid, SPAIN
+
+
+Manuel Rodriguez Pascual, Antonio Juan Rubio-Montero, Rafael Mayo Garcia, "my article", not published yet
 
 
 
@@ -138,18 +182,3 @@ decir que no utiliza los templates de gridway porque estos se pueden usar en otr
 
 
 subir la libreria java que crea los templates, ver de que manera
-
-
-
-License
--------
-
-este software esta liberado bajo licencia GPL, bla bla bla
-
-Citations
-------
-Users employing this software for scientific articles are encouraged to reference it.
-
-The article that should be cited is:
-
-Manuel Rodriguez Pascual, Antonio Juan Rubio-Montero, Rafael Mayo Garcia, "my article", not published yet
