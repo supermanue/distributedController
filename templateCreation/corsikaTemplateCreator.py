@@ -28,8 +28,8 @@ if __name__ == '__main__':
     print ("")
     print ("assuming that desired output file is results$N.tar.gz")
 
-    if len(sys.argv) != 4:
-        print("Usage: corsikaTemplateCreator.py <inputFilePrefix> <inputFilePath> <templatePath>")
+    if len(sys.argv) <4:
+        print("Usage: corsikaTemplateCreator.py <inputFilePrefix> <inputFilePath> <templatePath> [StorageElementFolder]")
         print ("sys.argv vale " + str(sys.argv))
         sys.exit(-1)
 
@@ -40,6 +40,9 @@ if __name__ == '__main__':
     inputFilePrefix=sys.argv[1]
     inputFilePath=sys.argv[2]
     templatePath=sys.argv[3]
+    if len(sys.argv) == 5:
+	storageElementFolder=sys.argv[4]
+
 
 
     #create output folder if it does not exist
@@ -64,15 +67,17 @@ if __name__ == '__main__':
             f.write("        <argument>"+argument2+"</argument>\n")
             f.write("        <argument>"+ str(counter) +"</argument>\n")
             f.write("        <argument>" + inputFile+ "</argument>\n")
+            if  len(sys.argv) == 5:
+                f.write("        <argument>" +storageElementFolder+ "</argument>\n")
             f.write("    </arguments>\n")
             f.write("    <workingDirectory>" + inputFilePath + "</workingDirectory>\n")
             f.write("    <inputFiles>\n")
             f.write("        <inputFile>corsika.sh</inputFile>\n")
             f.write("        <inputFile>" + inputFile + "</inputFile>\n")
             f.write("    </inputFiles>\n")
-            f.write("    <outputFiles>\n")
-            f.write("        <outputFile>results"+str(counter) + ".tar.gz</outputFile>\n")
-            f.write("    </outputFiles>\n")
+#            f.write("    <outputFiles>\n")
+#            f.write("        <outputFile>results"+str(counter) + ".tar.gz</outputFile>\n")
+#            f.write("    </outputFiles>\n")
             f.write("</gridTask>\n")
             f.close()
 

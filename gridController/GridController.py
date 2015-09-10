@@ -345,7 +345,7 @@ class GridWayController(object):
 
 		# If error, raise exception
 		if p.returncode:
-			raise 'Error in "{0}". Exit code: {1}. Output: {2}'
+			raise ('Error in when executing' + command)
 
 		# Else, return output
 		return res
@@ -518,7 +518,7 @@ class GridWayController(object):
 			return False
 
 
-	#the best number of tasks being executed is the maximun number of tasks that can be scheduled between 2 calles of ControlExecution
+	#the best number of tasks being executed is the maximun number of tasks that can be scheduled between 2 calls of ControlExecution
 	#this is obtained by the the number of tasks submitted on each dispatch chunk, multiplied by the number of dispatch chunks between
 	#two calls of controlExecution
 
@@ -560,11 +560,19 @@ class GridWayController(object):
 				print ("	already finished")
 				myGridTask.status="VENTILATED"
 				dbSession.add(myGridTask)
+
 		for myGridTask in  dbSession.query(GridTask.GridTask).filter((GridTask.GridTask.status!="VENTILATED"),(GridTask.GridTask.status!="WAITING")):
-				print ("Task ID: " + str(myGridTask.id))
-				print ("	restarted")
-				myGridTask.status="WAITING"
-				dbSession.add(myGridTask)
+			print ("Task ID: " + str(myGridTask.id))
+			print ("	restarted")
+			myGridTask.status="WAITING"
+			dbSession.add(myGridTask)
+
+		for myHost in dbSession.query(Host.Host):
+			myHost.failedTasks = 0
+	        myHost.problematicTasks=0
+	        myHost.problematicTasksInARow=0
+	        mySession.add(myHost)
+
 		dbSession.commit()
 
 	def controlExecution(self, dbSession):
@@ -729,6 +737,9 @@ class GridWayController(object):
 				group.finished = True
 				print("TaskGroup " + str(group.id) + " status: finished")
 				dbSession.add(group)
+
+				print ("Executing post-process script of group " + str(group.id) + ". This will run in background")
+				self.runProcess(group.postProcessScript)
 		dbSession.commit()
 
 
@@ -867,7 +878,6 @@ class GridWayController(object):
 		controller.exitGridSession()
 
 if __name__ == '__main__':
-		print("mi culo huele a rosas")
 
 		print ("Analyzing input parameters")
 		sequentialExecution = False

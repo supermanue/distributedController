@@ -28,9 +28,15 @@ import base
 
 if __name__ == '__main__':
 
-    if len(sys.argv) != 2:
-        print("que puta mierda es esta")
+    if len(sys.argv) < 2:
+        print("Usage: TaskLoader.py <indexFile> [postProcessScript]
 
+    indexFile = sys.argv[1]
+    postProcessScript=None
+
+    if sys.argc==3:
+        postProcessScript = sys.argv[2]
+        print ("postProcessScript is " + postProcessScript)
 
     #connect to DB and create it if it does not exist
 
@@ -38,7 +44,7 @@ if __name__ == '__main__':
 
 try:
     engine.execute("CREATE DATABASE DistributedController") #create db
-except: 
+except:
     print ("database already exists")
 
     engine.execute("USE DistributedController") # select new db
@@ -65,12 +71,12 @@ except:
 
 
     #create task group
-    taskGroup = TaskGroup.TaskGroup(sys.argv[1])
+    taskGroup = TaskGroup.TaskGroup(indexFile, postProcessScript)
     mySession.add(taskGroup)
     mySession.commit()
 
-    print("LOADING TASK GROUP: " + sys.argv[1])
-    for xmlFile in open(sys.argv[1], 'r'):
+    print("LOADING TASK GROUP: " + indexFile)
+    for xmlFile in open(indexFile, 'r'):
         xmlFile = xmlFile.strip()
         auxTask = GridTask.GridTask()
         auxTask.fromXML(taskGroup.id,xmlFile)
